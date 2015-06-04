@@ -7,6 +7,11 @@ try:
     import poc_2048_gui
 except ImportError:
     import ext.poc_2048_gui as poc_2048_gui
+try:
+    import poc_simpletest
+except ImportError:
+    import ext.poc_simpletest as poc_simpletest
+import random
 
 # Directions, DO NOT MODIFY
 UP = 1
@@ -76,37 +81,42 @@ class TwentyFortyEight:
     """
 
     def __init__(self, grid_height, grid_width):
-        # replace with your code
-        pass
+        self.grid_height = grid_height
+        self.grid_width = grid_width
+        self.cells = [[0 for col in range(self.grid_width)] for row in range(self.grid_height)]
+        self.move_dir = []
+        for col in range(self.grid_width):
+            for row in range(self.grid_height):
+                self.move_dir = []
+
 
     def reset(self):
         """
         Reset the game so the grid is empty except for two
         initial tiles.
         """
-        # replace with your code
-        pass
+        self.cells = [[0 for col in range(self.grid_width)] for row in range(self.grid_height)]
+        self.new_tile()
+        self.new_tile()
+        return self.cells
 
     def __str__(self):
         """
         Return a string representation of the grid for debugging.
         """
-        # replace with your code
-        return ""
+        return str(self.cells)
 
     def get_grid_height(self):
         """
         Get the height of the board.
         """
-        # replace with your code
-        return 0
+        return self.grid_height
 
     def get_grid_width(self):
         """
         Get the width of the board.
         """
-        # replace with your code
-        return 0
+        return self.grid_width
 
     def move(self, direction):
         """
@@ -122,22 +132,34 @@ class TwentyFortyEight:
         square.  The tile should be 2 90% of the time and
         4 10% of the time.
         """
-        # replace with your code
-        pass
+        #self.cells = [[0 for col in range(self.grid_width)] for row in range(self.grid_height)]
+        col = random.randrange(0,self.grid_width)
+        row = random.randrange(0,self.grid_height)
+        chance = random.randrange(0,10)
+        if any(0 in sublist for sublist in self.cells):
+            if self.cells[row][col] == 0:
+                if chance == 9:
+                    self.cells[row][col] = 4
+                else:
+                    self.cells[row][col] = 2
+            else:
+                col = random.randrange(0,self.grid_width)
+                row = random.randrange(0,self.grid_height)
+        else:
+            print("no empty tiles")
+        return self.cells
 
     def set_tile(self, row, col, value):
         """
         Set the tile at position row, col to have the given value.
         """
-        # replace with your code
-        pass
+        self.cells[row][col] = value
 
     def get_tile(self, row, col):
         """
         Return the value of the tile at position row, col.
         """
-        # replace with your code
-        return 0
+        return self.cells[row][col]
 
 if __name__ == "__main__":
     # tests
@@ -146,4 +168,17 @@ if __name__ == "__main__":
     #print("should return [4, 0, 0, 0]",merge([2, 2, 0, 0]))
     #print("should return [4, 4, 2, 0, 0]",merge([2, 2, 2, 2, 2]))
     #print("should return [8, 32, 8, 0]",merge([8, 16, 16, 8]))
-    poc_2048_gui.run_gui(TwentyFortyEight(4, 4))
+    #poc_2048_gui.run_gui(TwentyFortyEight(4, 4))
+    field = TwentyFortyEight(3, 5)
+    test = poc_simpletest.TestSuite()
+    test.run_test(field.new_tile(), "[[2, 2, 0, 2, 0], [0, 0, 0, 0, 2], [0, 2, 2, 0, 0]]", "test1")
+    test.report_results()
+    #field.reset()
+    field.new_tile()
+    field.new_tile()
+    field.new_tile()
+    field.new_tile()
+    field.new_tile()
+    field.new_tile()
+    field.reset()
+    print(field.cells)
