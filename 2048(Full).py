@@ -84,11 +84,15 @@ class TwentyFortyEight:
         self.grid_height = grid_height
         self.grid_width = grid_width
         self.cells = [[0 for col in range(self.grid_width)] for row in range(self.grid_height)]
-        self.move_dir = []
+        self.move_dir = {"UP": [], "DOWN": [], "LEFT": [], "RIGHT": []}
+        # "UP" =[(0, 0), (0, 1), (0, 2), (0, 3)]
+        #self.move_dir["UP"] = "test"
         for col in range(self.grid_width):
-            for row in range(self.grid_height):
-                self.move_dir = []
-
+            self.move_dir["UP"].append((0, col))
+            self.move_dir["DOWN"].append((self.grid_height, col))
+        for row in range(self.grid_width):
+            self.move_dir["LEFT"].append((row, 0))
+            self.move_dir["RIGHT"].append((row, self.grid_width))
 
     def reset(self):
         """
@@ -174,11 +178,6 @@ if __name__ == "__main__":
     test.run_test(field.new_tile(), "[[2, 2, 0, 2, 0], [0, 0, 0, 0, 2], [0, 2, 2, 0, 0]]", "test1")
     test.report_results()
     #field.reset()
-    field.new_tile()
-    field.new_tile()
-    field.new_tile()
-    field.new_tile()
-    field.new_tile()
-    field.new_tile()
     field.reset()
     print(field.cells)
+    print(field.move_dir)
