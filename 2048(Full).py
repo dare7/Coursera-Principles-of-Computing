@@ -1,6 +1,6 @@
 """
 Clone of 2048 game.
-Online version(python 2.6): http://www.codeskulptor.org/#user40_vUM4HYMcn4Ii7nw_0.py
+Online version(python 2.6): http://www.codeskulptor.org/#user40_KgrJp9qZgjlFCfH_12.py
 """
 __author__ = 'dare7'
 try:
@@ -83,7 +83,7 @@ class TwentyFortyEight:
     def __init__(self, grid_height, grid_width):
         self._grid_height = grid_height
         self._grid_width = grid_width
-        self._cells = [[0 for col in range(self._grid_width)] for row in range(self._grid_height)]
+        self._cells = [[0 for dummy_col in range(self._grid_width)] for dummy_row in range(self._grid_height)]
         self._move_dir = {UP: [], DOWN: [], LEFT: [], RIGHT: []}
         # "UP" =[(0, 0), (0, 1), (0, 2), (0, 3)]
         #self._move_dir["UP"] = "test"
@@ -102,7 +102,7 @@ class TwentyFortyEight:
         Reset the game so the grid is empty except for two
         initial tiles.
         """
-        self._cells = [[0 for col in range(self._grid_width)] for row in range(self._grid_height)]
+        self._cells = [[0 for dummy_col in range(self._grid_width)] for dummy_row in range(self._grid_height)]
         self.new_tile()
         self.new_tile()
         #return self._cells
@@ -134,8 +134,7 @@ class TwentyFortyEight:
             num_steps = self._grid_height
         elif direction in (LEFT, RIGHT):
             num_steps = self._grid_width
-        cells_init = []
-        cells_init.append(self._cells)
+        moved = False
         temp_list = []
         for start_cell in self._move_dir[direction]:
             # step 1: iterate through each line, write results to temp list
@@ -144,7 +143,11 @@ class TwentyFortyEight:
                 col = start_cell[1] + step * OFFSETS[direction][1]
                 temp_list.append(self._cells[row][col])
             # step 2: merge temp list
+            temp_list_snap = temp_list[:]
             temp_list = merge(temp_list)
+            print(temp_list_snap, temp_list)
+            if temp_list_snap != temp_list:
+                moved = True
             # step 3: store merged temp list back on grid
             idx = 0
             for step in range(num_steps):
@@ -157,8 +160,9 @@ class TwentyFortyEight:
                     self._cells[row][col] = temp_list[idx]
                     idx += 1
             temp_list = []
-        if cells_init != self._cells:
+        if moved:
             self.new_tile()
+            moved = False
         score = sum(map(sum, self._cells))
         print("Your score: %s" % score)
         #return self._cells
