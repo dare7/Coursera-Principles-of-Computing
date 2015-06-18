@@ -50,6 +50,20 @@ def clock_helper(total_seconds):
     seconds_in_minute = total_seconds % 60
     return seconds_in_minute
 
+
+def flush_prob():
+    from math import factorial as fct
+    result = (fct(13)*fct(4))/(fct(8)*fct(5)*fct(3)*fct(1))
+    return result
+
+def simple():
+    t = 16.0
+    #result = (2+3+3+4+4+5+6+5+6+7+8+4+5+5+6+7)/t
+    result = (8.28 / 8.45 + 3.92 / 9.00 + 8.67 / 10.00 + 9.75 / 10.00 + 13.00 / 15.00 + 9.00 / 11.00)/6.0
+    print(result)
+
 if __name__ == "__main__":
     #print(clock_helper(90))
-    print(math.log(math.sqrt(5**7), 5))
+    #print(math.log(math.sqrt(5**7), 5))
+    #print(flush_prob())
+    simple()

@@ -1,5 +1,6 @@
 """
 Monte Carlo Tic-Tac-Toe Player
+Online version on python 2.6: http://www.codeskulptor.org/#user40_CaGjaMl8gVnYjUS.py
 """
 __author__ = 'dare7'
 
@@ -9,7 +10,7 @@ try:
 except ImportError:
     import ext.poc_ttt_gui as poc_ttt_gui
 try:
-    import poc_ttt_provided
+    import poc_ttt_provided as provided
 except ImportError:
     import ext.poc_ttt_provided as provided
 
@@ -17,7 +18,7 @@ except ImportError:
 # You may change the values of these constants as desired, but
 #  do not change their names.
 NTRIALS = 500        # Number of trials to run
-SCORE_CURRENT = 10.0 # Score for squares played by the current player
+SCORE_CURRENT = 7.0 # Score for squares played by the current player
 SCORE_OTHER = 1.0   # Score for squares played by the other player
 
 # Add your functions here.
